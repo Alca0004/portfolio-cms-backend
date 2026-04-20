@@ -45,7 +45,7 @@ const updateProject = async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    const updatedProject = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedProject = await Project.findByIdAndUpdate(req.params.id, req.body, { returnDocument: "after" });
     res.status(200).json(updatedProject);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });

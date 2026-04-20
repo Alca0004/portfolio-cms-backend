@@ -19,11 +19,7 @@ const updateProfile = async (req, res) => {
     }
 
     // Now update the user using their id from the token
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user._id, // which user to update
-      updatedFields, // what to update
-      { new: true }, // return updated version
-    ).select("-password"); // don't return the password
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, updatedFields, { returnDocument: "after" }).select("-password");
 
     res.status(200).json(updatedUser);
   } catch (error) {
