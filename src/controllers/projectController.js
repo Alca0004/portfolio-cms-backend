@@ -10,10 +10,8 @@ const getAllProjects = async (req, res) => {
 };
 const getProjectById = async (req, res) => {
   try {
-    // req.params.id gets the id from the URL
     const project = await Project.findById(req.params.id);
 
-    // If no project found with that id
     if (!project) {
       return res.status(404).json({ message: "Project not found" });
     }
@@ -26,11 +24,11 @@ const getProjectById = async (req, res) => {
 
 const createProject = async (req, res) => {
   try {
-    const { title, description, techStack, githubUrl, liveUrl } = req.body;
+    const { title, description, techStack, githubUrl, liveUrl, published } = req.body;
     if (!title || !description || !techStack) {
       return res.status(400).json({ message: "Please fill in all required fields" });
     }
-    const project = await Project.create({ title, description, techStack, githubUrl, liveUrl });
+    const project = await Project.create({ title, description, techStack, githubUrl, liveUrl, published });
 
     res.status(201).json(project);
   } catch (error) {
