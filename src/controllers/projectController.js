@@ -35,7 +35,7 @@ const getProjectById = async (req, res) => {
 };
 const createProject = async (req, res) => {
   try {
-    const { title, description, techStack, githubUrl, liveUrl } = req.body;
+    const { title, description, techStack, githubUrl, liveUrl, published } = req.body;
     if (!title || !description || !techStack) {
       return res.status(400).json({ message: "Please fill in all required fields" });
     }
@@ -54,6 +54,7 @@ const createProject = async (req, res) => {
       githubUrl,
       liveUrl,
       image: imageUrl,
+      published
     });
 
     res.status(201).json(project);
