@@ -40,6 +40,8 @@ const createProject = async (req, res) => {
       return res.status(400).json({ message: "Please fill in all required fields" });
     }
 
+    const techStackArray = techStack.split(",").map((t) => t.trim());
+
     let imageUrl = "";
     if (req.file) {
       imageUrl = await uploadImageToCloudinary(req.file);
@@ -48,7 +50,7 @@ const createProject = async (req, res) => {
     const project = await Project.create({
       title,
       description,
-      techStack,
+      techStack: techStackArray,
       githubUrl,
       liveUrl,
       image: imageUrl,
@@ -59,7 +61,6 @@ const createProject = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-
 const updateProject = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
